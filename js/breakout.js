@@ -8,6 +8,9 @@ var x = canvas.width/2;
 var y = canvas.height-30;
 var dx = 2;
 var dy = -2;
+var score =0;
+var scoreColor = 'rgb(' + (Math.floor(Math.random() * 256-120)) + ',' + (Math.floor(Math.random() * 256-120)) + ',' + (Math.floor(Math.random() * 256-120)) + ')';
+
 
 //ball variables 
 var ballRadius = 10;
@@ -45,7 +48,7 @@ var brickColumnCount =6;
 var brickWidth = 65;
 var brickHeight = 15;
 var brickPadding = 10;
-var brickOffsetTop = 25;
+var brickOffsetTop = 28;
 var brickOffsetLeft = 25;
 var brickColor = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
 
@@ -56,6 +59,14 @@ for(c=0;c<brickColumnCount;c++){
     for(r=0;r<brickRowCount;r++){
         bricks[c][r]= { x:0,y:0,status:1};
     }
+}
+
+//Draw Score Function
+function drawScore(){
+    ctx.font = "17px Arial ";
+    ctx.fillStyle = scoreColor;
+    ctx.fillText("Score : "+score, 8,20);
+    document.getElementById("gamescore").innerHTML = "Score: " + score;
 }
 //Draw Bricks Function
 function drawBricks(){
@@ -84,8 +95,10 @@ function collisionDetection(){
                 if(x > b.x && x<b.x+brickWidth && y < b.y+brickHeight){
                     dy = -dy;
                     b.status =0;
+                    score = ++;
                     ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
                     brickColor = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+                    scoreColor = 'rgb(' + (Math.floor(Math.random() * 256-100)) + ',' + (Math.floor(Math.random() * 256-100)) + ',' + (Math.floor(Math.random() * 256-100)) + ')';
                 }
             }
         }
@@ -114,7 +127,8 @@ function additionalFunction(){
       document.location.reload();
       }
   }
-  
+}
+function paddleMove(){
     if(rightPressed && paddleX < canvas.width-paddleWidth){
         paddleX += 8;
     }
@@ -122,16 +136,20 @@ function additionalFunction(){
         paddleX -= 8;
     }
 }
+
+
 function draw() {
    
    ctx.clearRect(0,0, canvas.width,canvas.height);
     drawball();
     drawPaddle();
     drawBricks();
+    drawScore();
     x +=dx;
     y +=dy;
     collisionDetection();
     additionalFunction();
+    paddleMove();
     
    
    
