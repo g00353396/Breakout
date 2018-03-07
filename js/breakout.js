@@ -73,29 +73,36 @@ function drawBricks(){
         }
     }
 }
-function draw() {
-   
-   ctx.clearRect(0,0, canvas.width,canvas.height);
-    drawball();
-    drawPaddle();
-    drawBricks();
-    x +=dx;
-    y +=dy;
-    
+function collisionDetection(){
+    for(c=0;c<brickColumnCount;c++){
+        for(r=0;r<brickRowCount;r++){
+            var b = bricks[c][r];
+            if(x>b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight){
+                dy=-dy;
+                ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+                brickColor = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+            }
+        }
+    }
+}
+function additionalFunction(){
     if(x+dx > canvas.width-ballRadius || x + dx <ballRadius){
         dx = -dx;
         ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
         paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+        brickColor = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
     }
   if(y+dy < ballRadius){
       dy = -dy;
       ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
       paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+      brickColor = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
   }else if (y+dy > canvas.height-ballRadius){
       if(x > paddleX && x < paddleX + paddleWidth){
           dy=-dy;
           ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
       paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+
       }else{
       alert("Game Over");
       document.location.reload();
@@ -108,6 +115,19 @@ function draw() {
     else if(leftPressed && paddleX > 0){
         paddleX -= 8;
     }
+}
+function draw() {
+   
+   ctx.clearRect(0,0, canvas.width,canvas.height);
+    drawball();
+    drawPaddle();
+    drawBricks();
+    x +=dx;
+    y +=dy;
+    collisionDetection();
+    additionalFunction();
+    
+   
    
 }
 //Listeners 
