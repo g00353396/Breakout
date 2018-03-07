@@ -96,6 +96,10 @@ function collisionDetection(){
                     dy = -dy;
                     b.status =0;
                     score = ++;
+                    if(score == brickRowCount*brickColumnCount){
+                        alert("CONGRATULATION , you've won YongTze Ng's Breakout Game ");
+                        document.location.reload();
+                    }
                     ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
                     brickColor = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
                     scoreColor = 'rgb(' + (Math.floor(Math.random() * 256-100)) + ',' + (Math.floor(Math.random() * 256-100)) + ',' + (Math.floor(Math.random() * 256-100)) + ')';
