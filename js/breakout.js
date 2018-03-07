@@ -1,8 +1,7 @@
 //Setup the canvas
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-var ballRadius = 10;
-var ballColour = "0095DD";
+
 
 //Set the starting point
 var x = canvas.width/2;
@@ -39,6 +38,8 @@ function drawball(){
     ctx.fill();
     ctx.closePath();
 }
+
+
 function draw() {
    
    ctx.clearRect(0,0, canvas.width,canvas.height);
@@ -47,17 +48,26 @@ function draw() {
     x +=dx;
     y +=dy;
     
-    if(y+dy > canvas.height-ballRadius||y+dy<ballRadius){
-    dy=-dy
-    ballColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
-    paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
-    }
-    
-    if(x+dx > canvas.width-ballRadius||x+dx<ballRadius){
-        dx=-dx
+    if(x+dx > canvas.width-ballRadius || x + dx <ballRadius){
+        dx = -dx;
         ballColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
         paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
-        }
+    }
+  if(y+dy < ballRadius){
+      dy = -dy;
+      ballColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
+      paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
+  }else if (y+dy > canvas.height-ballRadius){
+      if(x > paddleX && x < paddleX + paddleWidth){
+          dy=-dy;
+          ballColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
+      paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
+      }else{
+      alert("Game Over");
+      document.location.reload();
+      }
+  }
+  
     if(rightPressed && paddleX < canvas.width-paddleWidth){
         paddleX += 8;
     }
