@@ -11,6 +11,10 @@ var dy = -2;
 var score =0;
 var scoreColor = 'rgb(' + (Math.floor(Math.random() * 256-120)) + ',' + (Math.floor(Math.random() * 256-120)) + ',' + (Math.floor(Math.random() * 256-120)) + ')';
 
+// Add some sounds to make things interesting 
+var WINNING_SOUND = new Audio('sounds/woohoo.wav');
+var SCORE_SOUND = new Audio('sounds/success.wav');
+var GAMEOVER_SOUND = new Audio('sounds/gameover.wav');
 
 //ball variables 
 var ballRadius = 10;
@@ -43,7 +47,7 @@ function drawball(){
 }
 
 //Brick variables 
-var brickRowCount =4;
+var brickRowCount =5;
 var brickColumnCount =6;
 var brickWidth = 65;
 var brickHeight = 15;
@@ -95,8 +99,10 @@ function collisionDetection(){
                 if(x > b.x && x<b.x+brickWidth && y < b.y+brickHeight){
                     dy = -dy;
                     b.status =0;
-                    score = ++;
+                    score++;
+                    SCORE_SOUND.play();
                     if(score == brickRowCount*brickColumnCount){
+                        WINNING_SOUND.play();
                         alert("CONGRATULATION , you've won YongTze Ng's Breakout Game ");
                         document.location.reload();
                     }
@@ -107,8 +113,6 @@ function collisionDetection(){
             }
         }
     }
-}
-function additionalFunction(){
     if(x+dx > canvas.width-ballRadius || x + dx <ballRadius){
         dx = -dx;
         ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
@@ -127,11 +131,13 @@ function additionalFunction(){
       paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
 
       }else{
+          GAMEOVER_SOUND.play();
       alert("Game Over");
       document.location.reload();
       }
   }
 }
+
 function paddleMove(){
     if(rightPressed && paddleX < canvas.width-paddleWidth){
         paddleX += 8;
@@ -152,7 +158,6 @@ function draw() {
     x +=dx;
     y +=dy;
     collisionDetection();
-    additionalFunction();
     paddleMove();
     
    
