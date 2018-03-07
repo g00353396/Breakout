@@ -11,7 +11,7 @@ var dy = -2;
 
 //ball variables 
 var ballRadius = 10;
-var ballColour = "0095DD";
+var ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
 
 //Paddle Variables 
 var paddleHeight = 10 ;
@@ -19,7 +19,7 @@ var paddleWidth = 85;
 var paddleX = (canvas.width-paddleWidth)/2;
 var rightPressed = false;
 var leftPressed = false;
-var paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
+var paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
 
 //Draw the paddle 
 function drawPaddle(){
@@ -39,29 +39,63 @@ function drawball(){
     ctx.closePath();
 }
 
+//Brick variables 
+var brickRowCount =4;
+var brickColumnCount =6;
+var brickWidth = 65;
+var brickHeight = 15;
+var brickPadding = 10;
+var brickOffsetTop = 25;
+var brickOffsetLeft = 25;
+var brickColor = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
 
+//Brick Array
+var bricks = [];
+for(c=0;c<brickColumnCount;c++){
+    bricks[c] =[];
+    for(r=0;r<brickRowCount;r++){
+        bricks[c][r]= { x:0,y:0,status:1};
+    }
+}
+//Draw Bricks Function
+function drawBricks(){
+    for(c=0;c<brickColumnCount;c++) {
+        for(r=0;r<brickRowCount;r++){
+           var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+           var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+           bricks[c][r].x =brickX;
+           bricks[c][r].y = brickY;
+           ctx.beginPath();
+           ctx.rect(brickX,brickY,brickWidth,brickHeight);
+           ctx.fillStyle = brickColor;
+           ctx.fill();
+           ctx.closePath();
+        }
+    }
+}
 function draw() {
    
    ctx.clearRect(0,0, canvas.width,canvas.height);
     drawball();
     drawPaddle();
+    drawBricks();
     x +=dx;
     y +=dy;
     
     if(x+dx > canvas.width-ballRadius || x + dx <ballRadius){
         dx = -dx;
-        ballColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
-        paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
+        ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+        paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
     }
   if(y+dy < ballRadius){
       dy = -dy;
-      ballColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
-      paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
+      ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+      paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
   }else if (y+dy > canvas.height-ballRadius){
       if(x > paddleX && x < paddleX + paddleWidth){
           dy=-dy;
-          ballColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
-      paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ',' + (Math.floor(Math.random() * 256-30)) + ')';
+          ballColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+      paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
       }else{
       alert("Game Over");
       document.location.reload();
