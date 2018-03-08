@@ -134,7 +134,7 @@ function collisionDetection(){
 
       }else{
           lives --;
-          alert("Try Again ");
+          alert("Ouch ! ");
           if(!lives){
               GAMEOVER_SOUND.play();
               alert("Haha you lose , Game Over !");
