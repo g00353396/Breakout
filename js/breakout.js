@@ -10,6 +10,8 @@ var dx = 2;
 var dy = -2;
 var score =0;
 var scoreColor = 'rgb(' + (Math.floor(Math.random() * 256-120)) + ',' + (Math.floor(Math.random() * 256-120)) + ',' + (Math.floor(Math.random() * 256-120)) + ')';
+var lives =3;
+
 
 // Add some sounds to make things interesting 
 var WINNING_SOUND = new Audio('sounds/woohoo.wav');
@@ -131,9 +133,20 @@ function collisionDetection(){
       paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
 
       }else{
-          GAMEOVER_SOUND.play();
-      alert("Game Over");
-      document.location.reload();
+          lives --;
+          alert("Try Again ");
+          if(!lives){
+              GAMEOVER_SOUND.play();
+              alert("Haha you lose , Game Over !");
+              document.location.reload();
+          }else {
+              x =canvas.width/2;
+              y = canvas.height-30;
+              dx = 2;
+              dy = -2;
+              paddleX = (canvas.width-paddleWidth)/2;
+
+          }
       }
   }
 }
@@ -147,7 +160,12 @@ function paddleMove(){
     }
 }
 
-
+function drawLives(){
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#B22222"
+    ctx.fillText("Lives : "+lives, canvas.width-65,20);
+    document.getElementById("gamelives".innerHTML= "Lives: " + lives);
+}
 function draw() {
    
    ctx.clearRect(0,0, canvas.width,canvas.height);
@@ -155,6 +173,7 @@ function draw() {
     drawPaddle();
     drawBricks();
     drawScore();
+    drawLives();
     x +=dx;
     y +=dy;
     collisionDetection();
