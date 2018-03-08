@@ -166,23 +166,41 @@ function draw() {
 //Listeners 
 document.addEventListener("keydown", keyDownHandler,false);
 document.addEventListener("keyup",keyUpHandler,false);
+document.addEventListener("mousemove",mouseMoveHandler,false)
 
 //key down function
 function keyDownHandler(e){
     if(e.keyCode == 39){
         rightPressed = true;
+        paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+
     }
     else if(e.keyCode == 37){
         leftPressed = true;
+        paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+
     }
 }
 // key up function 
 function keyUpHandler(e){
     if(e.keyCode == 39){
         rightPressed = false;
+        paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+
     }
     else if(e.keyCode == 37){
         leftPressed = false;
+        paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+
+    }
+}
+//Mouse move function
+function mouseMoveHandler(e){
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX>0 && relativeX < canvas.width){
+        paddleX = relativeX - paddleWidth/2
+        paddleColour = 'rgb(' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ',' + (Math.floor(Math.random() * 256-45)) + ')';
+
     }
 }
 setInterval(draw,10);
